@@ -1,0 +1,13 @@
+
+body {
+  background: #353433;
+}
+
+.stage {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background: #000;
+  margin: 20px auto;
+  overflow: hidden;
+}

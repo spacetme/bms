@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="test/mocha.css" />
+  </head>
+  <body id="test-app">
+    <div id="mocha"></div>
+    <script src="test/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="vendor/require.js" data-main="main"></script>
+    <script src="app/requirejs-config.js"></script>
+  </body>
+</html>
