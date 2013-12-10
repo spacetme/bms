@@ -7,9 +7,7 @@ define(function(require) {
   return function(desire) {
 
 var stage = desire('game.stage')
-var state = desire('game.state')
-var notes = desire('game.notechart').notes
-var keysound = desire('game.keysound')
+var hook = desire('game.hook')
 
 function bind() {
 
@@ -21,27 +19,21 @@ function bind() {
   }
 
   stage.onkeyup = function(e) {
+    e.preventDefault()
     var column = codes.indexOf(e.keyCode)
     if (column == -1) return
+    if (!down[column]) return
     down[column] = false
+    hook('game.column.up', { column: column })
   }
 
   stage.onkeydown = function(e) {
+    e.preventDefault()
     var column = codes.indexOf(e.keyCode)
     if (column == -1) return
     if (down[column]) return
     down[column] = true
-    var matching = enums.toArray(notes).filter(function(note) {
-      return note.column == column
-    })
-    var closest = _.min(matching, function(note) {
-      return Math.pow(note.beat - state.beat, 2)
-    })
-    var keysounds = keysound.get(closest)
-    keysounds.each(function(k) {
-      k.play('hit')
-    })
-    return false
+    hook('game.column.down', { column: column })
   }
 
 }

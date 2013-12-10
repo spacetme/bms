@@ -17,15 +17,19 @@ define(function(require) {
       _.each(plugin.hooks, hooks.register)
     }
 
-    function hook(name, value, context) {
-      return hooks.run(name, value, context || app)
+    function Hook(context) {
+      function hook(name, value) {
+        return hooks.run(name, value, context)
+      }
+      hook.derive = Hook
+      return hook
     }
 
     app.desire = desire
     app.plug = plug
-    app.hook = hook
+    app.hook = Hook(app)
 
-    desire.register({ hook: Desire.value(hook) })
+    desire.register({ hook: Desire.value(app.hook) })
     desire.register({ hooks: Desire.value(hooks) })
 
     return app

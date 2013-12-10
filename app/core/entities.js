@@ -6,7 +6,7 @@ define(function(require) {
   var $id = require('object_id')
   
   /**
-   * A data structure representing the notes to display
+   * A data structure representing the playable notes to display.
    */
   return function GameNotes(data) {
 

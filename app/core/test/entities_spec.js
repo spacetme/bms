@@ -4,11 +4,11 @@ define(function(require) {
   var expect = require('chai').expect
   var sinon = require('sinon')
   var NoteData = require('note_data')
-  var GameNotes = require('game_notes')
+  var Entities = require('../entities')
 
   return function() {
 
-describe('GameNotes', function() {
+describe('Entities', function() {
 
   function assertNoteValue(spy, value) {
     sinon.assert.calledWith(spy, sinon.match({
@@ -25,7 +25,7 @@ describe('GameNotes', function() {
       { beat: 2, value: 'EE', column: 1 },
       { beat: 2.5, value: 'FF', column: 1 }
     ])
-    var notes = new GameNotes(data)
+    var notes = new Entities(data)
     notes.range(1, 2).each(spy)
     sinon.assert.callCount(spy, 2)
     assertNoteValue(spy, 'CC')
@@ -42,7 +42,7 @@ describe('GameNotes', function() {
       { beat: 2, value: 'EE', column: 1 },
       { beat: 2.5, value: 'FF', column: 1 }
     ])
-    var notes = new GameNotes(data)
+    var notes = new Entities(data)
     notes.range(1, 2).each(spy)
     sinon.assert.callCount(spy, 3)
     assertNoteValue(spy, 'BB')

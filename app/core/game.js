@@ -1,7 +1,6 @@
 
 define(function(require) {
 
-  var GameNotes = require('game_notes')
   var Desire = require('desire')
 
   var components = {
@@ -14,7 +13,11 @@ define(function(require) {
     'game.theme': require('./game_theme'),
     'game.keyboard': require('./game_keyboard'),
     'game.keysound': require('./keysound_manager'),
-    'game.load.keysound': require('./keysound_loader')
+    'game.load.keysound': require('./keysound_loader'),
+    'game.entities': require('./game_entities'),
+    'game.notes': require('./game_notes').main,
+    'game.notes.autoplay': require('./game_notes').autoplay,
+    'game.notes.playable': require('./game_notes').playable
   }
 
   return function(desire) {
@@ -30,7 +33,7 @@ game.desire.register(components)
 game.desire.register({
   'game': Desire.value(game),
   'game.notechart': Desire.value(notechart),
-  'game.notes': Desire.value(new GameNotes(notechart.notes))
+  'game.hook': Desire.value(hook.derive(game))
 })
 
 game.start = function() {
@@ -41,8 +44,7 @@ game.start = function() {
   game.desire('game.renderer').start(game)
   game.desire('game.load.keysound').load()
   game.desire('game.keyboard').bind()
-
-  hook('game.start', { game: game })
+  game.desire('game.hook')('game.start')
 
 }
 

@@ -11,7 +11,7 @@ define(function(require) {
     
 var state = desire('game.state')
 var theme = desire('game.theme')
-var notes = desire('game.notes')
+var gameEntities = desire('game.entities')
 var metrics = desire('game.metrics')
 
 var pools = [ ]
@@ -75,7 +75,7 @@ function render() {
 
 function getEntities() {
   return metrics.visibleRange(function(start, end) {
-    return notes.range(start, end)
+    return gameEntities.range(start, end)
   })
 }
 

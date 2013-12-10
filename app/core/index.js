@@ -18,22 +18,29 @@ define(function(require) {
       {
         on: 'game.frame',
         order: 1,
-        do: function(event) {
-          event.game.desire('game.state').update()
+        do: function() {
+          this.desire('game.state').update()
         }
       },
       {
         on: 'game.frame',
         order: 2,
-        do: function(event) {
-          event.game.desire('game.keysound').autoplay()
+        do: function() {
+          this.desire('game.keysound').autoplay()
         }
       },
       {
         on: 'game.frame',
         order: 100,
         do: function(event) {
-          event.game.desire('game.render.notes').render()
+          this.desire('game.render.notes').render()
+        }
+      },
+      {
+        on: 'game.column.down',
+        order: 20,
+        do: function(event) {
+          this.desire('game.keysound').hit(event)
         }
       }
     ]

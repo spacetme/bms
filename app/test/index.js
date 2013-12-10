@@ -14,7 +14,6 @@ define(function(require) {
     require('./note_data_spec')()
     require('./object_id_spec')()
     require('./object_pool_spec')()
-    require('./game_notes_spec')()
     require('../core/test/index')()
   }
   
