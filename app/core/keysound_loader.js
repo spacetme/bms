@@ -20,43 +20,19 @@ function load() {
 
   function createKeysound(id) {
     return {
-      play: function() {
-        createjs.Sound.play(id)
+      play: function(type) {
+        var instance = createjs.Sound.play(id)
+        if (type == 'auto') instance.volume = 0.8
       }
     }
   }
 
   notechart.notes.each(function(note) {
-    keysoundManager.set(note, [ keysound(note.value) ])
+    keysoundManager.set(note, keysound(note.value))
     if (note.column < 0) {
       keysoundManager.addAutoplay(note)
     }
   })
-
-/*
-  var left  = new AudioWrapper(audios[1])
-  var right = new AudioWrapper(audios[2])
-  var leftTrack  = new SoundTrack(left)
-  var rightTrack = new SoundTrack(right)
-
-  leftTrack.apply(function() {
-    rightTrack.apply(function() {
-
-      notechart.notes.each(function(note) {
-        var keysounds = [ ]
-        var second = notechart.timing.beatToSecond(note.beat)
-        if (note.value == '02') {
-          keysounds.push(leftTrack.slice(second))
-        }
-        if (note.value == '04') {
-          keysounds.push(rightTrack.slice(second))
-        }
-        keysoundManager.set(note, keysounds)
-      })
-
-    })
-  })
-*/
 
 }
 
