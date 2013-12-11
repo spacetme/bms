@@ -16,6 +16,7 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "when": "~2.7.0",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "eventemitter2": "~0.4.13"
   }
 }

@@ -10,6 +10,7 @@ define(function(require) {
     'game.metrics': require('./game_metrics'),
     'game.renderer': require('./game_renderer'),
     'game.render.notes': require('./render/notes'),
+    'game.Theme': require('./game_theme_class'),
     'game.theme': require('./game_theme'),
     'game.keyboard': require('./game_keyboard'),
     'game.keysound': require('./keysound_manager'),

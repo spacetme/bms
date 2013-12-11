@@ -28,6 +28,10 @@ columns.forEach(function(number) {
     var graphics = theme.note.create(number)
     var added = false
 
+    var setHeight = new Changer(function changeHeight(height) {
+          graphics.setHeight(height)
+        }, 0)
+
     return {
       set: function(value) {
         if (!added) {
@@ -35,7 +39,8 @@ columns.forEach(function(number) {
           added = true
         }
         graphics.position.x = x
-        graphics.position.y = value.y - theme.note.height
+        graphics.position.y = value.y
+        setHeight(value.height)
       },
       deactivate: function() {
         if (added) {
@@ -67,7 +72,7 @@ function render() {
       var yy = metrics.noteY(entity.finish, entity)
       pool.use({ id: $id(entity), y: y, height: y - yy })
     } else {
-      pool.use({ id: $id(entity), y: y })
+      pool.use({ id: $id(entity), y: y, height: 0 })
     }
   })
   pools.each(itself('.commit()'))

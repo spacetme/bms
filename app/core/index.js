@@ -17,14 +17,14 @@ define(function(require) {
       },
       {
         on: 'game.frame',
-        order: 1,
+        order: 0,
         do: function() {
           this.desire('game.state').update()
         }
       },
       {
         on: 'game.frame',
-        order: 2,
+        order: 10,
         do: function() {
           this.desire('game.keysound').autoplay()
         }
@@ -34,6 +34,13 @@ define(function(require) {
         order: 100,
         do: function(event) {
           this.desire('game.render.notes').render()
+        }
+      },
+      {
+        on: 'game.frame',
+        order: 110,
+        do: function() {
+          this.desire('game.theme').update()
         }
       },
       {

@@ -7,6 +7,7 @@ define(function(require) {
   return function(desire) {
 
 var stage = desire('game.stage')
+var state = desire('game.state')
 var hook = desire('game.hook')
 
 function bind() {
@@ -24,6 +25,7 @@ function bind() {
     if (column == -1) return
     if (!down[column]) return
     down[column] = false
+    state.buttons[column] = false
     hook('game.column.up', { column: column })
   }
 
@@ -33,6 +35,7 @@ function bind() {
     if (column == -1) return
     if (down[column]) return
     down[column] = true
+    state.buttons[column] = true
     hook('game.column.down', { column: column })
   }
 
