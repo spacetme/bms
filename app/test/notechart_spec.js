@@ -89,6 +89,37 @@ describe('notechart', function() {
 
   })
 
+  it('notes should have time', function() {
+
+    var notechart = new Notechart(bms(
+      '#BPM 120',
+      '#00016:10111213'
+    ))
+    var spy = sinon.spy()
+    notechart.notes.each(spy)
+
+    sinon.assert.calledWith(spy, sinon.match({ time: 0 }))
+    sinon.assert.calledWith(spy, sinon.match({ time: 0.5 }))
+    sinon.assert.calledWith(spy, sinon.match({ time: 1 }))
+    sinon.assert.calledWith(spy, sinon.match({ time: 1.5 }))
+
+  })
+  
+  it('notes should have finishTime', function() {
+
+    var notechart = new Notechart(bms(
+      '#BPM 120',
+      '#00016:10000000',
+      '#00056:00100010'
+    ))
+    var spy = sinon.spy()
+    notechart.notes.each(spy)
+
+    sinon.assert.calledWith(spy, sinon.match({ finishTime: undefined }))
+    sinon.assert.calledWith(spy, sinon.match({ finishTime: 1.5 }))
+
+  })
+
 })
 
   }

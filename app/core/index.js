@@ -31,6 +31,13 @@ define(function(require) {
       },
       {
         on: 'game.frame',
+        order: 20,
+        do: function(event) {
+          this.desire('game.judges').update()
+        }
+      },
+      {
+        on: 'game.frame',
         order: 100,
         do: function(event) {
           this.desire('game.render.notes').render()
@@ -45,9 +52,50 @@ define(function(require) {
       },
       {
         on: 'game.column.down',
+        order: 10,
+        do: function(event) {
+          this.desire('game.judges')[event.column].down()
+        }
+      },
+      {
+        on: 'game.column.up',
+        order: 10,
+        do: function(event) {
+          this.desire('game.judges')[event.column].up()
+        }
+      },
+      {
+        on: 'game.judgment.blank',
         order: 20,
         do: function(event) {
-          this.desire('game.keysound').hit(event)
+          this.desire('game.keysound').blank(event.column)
+        }
+      },
+      {
+        on: 'game.judgment.hit',
+        order: 20,
+        do: function(event) {
+          if (event.result != 'miss') {
+            this.desire('game.keysound').hit(event.note)
+          }
+        }
+      },
+      {
+        on: 'game.judgment.release',
+        order: 20,
+        do: function(event) {
+          if (event.result == 'miss') {
+            this.desire('game.keysound').break(event.note)
+          } else {
+            this.desire('game.keysound').release(event.note)
+          }
+        }
+      },
+      {
+        on: 'game.judgment',
+        order: 20,
+        do: function(event) {
+          this.desire('game.state').handleJudgment(event)
         }
       }
     ]

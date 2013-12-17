@@ -55,10 +55,42 @@ define(function(require) {
       return ts
     }
 
+    function getColumns() {
+      var stats = { }
+      eachEvent(bms, function(event) {
+        if (BMS.isNote(event) && event.channel < 100) {
+          var channel = event.channel
+          if (channel >= 50) channel -= 40
+          stats[channel] = (stats[channel] || 0) + 1
+        }
+      })
+      console.log(stats)
+      return (
+        make([16, 11, 12, 14, 15, 18], [16, 11, 12, 14, 15, 18], [13, 19]) ||
+        make([11, 12, 13, 15, 18, 19], [11, 12, 13, 15, 18, 19], [16, 14]) ||
+        make([16, 11, 12, 13, 14, 15], [16, 11, 12, 13, 14, 15], [18, 19]) ||
+        make([11, 12, 13, 14, 15, 18], [11, 12, 13, 14, 15, 18], [16, 19]) ||
+        make([16, 11, 12, 13, 14, 15, 18], [16], [19]) ||
+        make([11, 12, 13, 14, 15, 18, 19], [], [])
+      )
+      function make(channels, requires, disallows) {
+        for (var i = 0; i < requires.length; i ++) {
+          if (!stats[requires[i]]) return false
+        }
+        for (i = 0; i < disallows.length; i ++) {
+          if (stats[disallows[i]]) return false
+        }
+        return channels
+      }
+    }
+
     function loadNotes() {
 
       var notes = [ ]
       var heads = { }
+
+      var columns = getColumns()
+      notechart.columns = columns.length
 
       bms.events.sort(function(a, b) {
         return beat(a) - beat(b)
@@ -70,7 +102,7 @@ define(function(require) {
           if (50 <= event.channel && event.channel < 70) { // long note
             if (!heads[event.channel]) {
               notes.push(heads[event.channel] = {
-                column: column(event),
+                column: column(event, columns),
                 beat: eventBeat,
                 value: event.value
               })
@@ -80,7 +112,7 @@ define(function(require) {
             }
           } else { // other notes
             notes.push({
-              column: column(event),
+              column: column(event, columns),
               beat: eventBeat,
               value: event.value
             })
@@ -90,6 +122,9 @@ define(function(require) {
 
       notes.forEach(function(note) {
         note.time = notechart.timing.beatToSecond(note.beat)
+        if (note.finish) {
+          note.finishTime = notechart.timing.beatToSecond(note.finish)
+        }
       })
 
       return new NoteData(notes)
@@ -101,11 +136,11 @@ define(function(require) {
       return notechart.timeSignatures.measureToBeat(measurePosition)
     }
 
-    function column(event) {
+    function column(event, columns) {
       var channel = event.channel
       if (channel > 100) return 100 - channel
       if (channel >= 50) channel -= 40
-      return _.indexOf([16, 11, 12, 13, 14, 15, 18], channel)
+      return _.indexOf(columns, channel)
     }
 
   }

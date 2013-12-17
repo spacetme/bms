@@ -23,6 +23,7 @@ function load() {
       play: function(type) {
         var instance = createjs.Sound.play(id)
         if (type == 'auto') instance.volume = 0.8
+        return instance
       }
     }
   }

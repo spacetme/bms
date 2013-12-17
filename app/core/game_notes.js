@@ -14,9 +14,9 @@ define(function(require) {
   }
 
   return {
-    autoplay: createComponentFactory(true),
-    playable: createComponentFactory(false),
-    main: function(desire) {
+    'game.notes.autoplay': createComponentFactory(true),
+    'game.notes.playable': createComponentFactory(false),
+    'game.notes': function(desire) {
       return desire('game.notechart').notes
     }
   }

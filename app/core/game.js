@@ -2,6 +2,7 @@
 define(function(require) {
 
   var Desire = require('desire')
+  var _ = require('lodash')
 
   var components = {
     'game.stage': require('./game_stage'),
@@ -16,10 +17,13 @@ define(function(require) {
     'game.keysound': require('./keysound_manager'),
     'game.load.keysound': require('./keysound_loader'),
     'game.entities': require('./game_entities'),
-    'game.notes': require('./game_notes').main,
-    'game.notes.autoplay': require('./game_notes').autoplay,
-    'game.notes.playable': require('./game_notes').playable
+    'game.judges': require('./judges'),
+    'game.Judge': require('./judge'),
+    'game.judgment': require('./judgment'),
+    'game.judgment.timing_window': Desire.value([0.07, 0.12, 0.15])
   }
+
+  _.assign(components, require('./game_notes'))
 
   return function(desire) {
 

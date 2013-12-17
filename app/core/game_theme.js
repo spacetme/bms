@@ -2,11 +2,13 @@
 define(function(require) {
   
   var pixi = require('pixi')
+  var Changer = require('changer')
 
   return function(desire) {
 
 var Theme = desire('game.Theme')
 var state = desire('game.state')
+var timer = desire('game.timer')
 var theme = new Theme()
 
 // == various aspects of notes: positions, colors, widths ==
@@ -34,6 +36,36 @@ theme.layer("Hit Highlight Background", function(layer) {
   })
 })
 
+// == display combo below ==
+theme.layer("Combo Info", function(layer) {
+  
+  layer.position.x = noteX[3] + noteWidth[3] / 2
+  layer.position.y = 160
+
+  var combo
+  var setCombo = new Changer(function(value) {
+    if (combo) layer.removeChild(combo)
+    combo = new pixi.Text("" + value, { font: 'bold 96px Helvetica', fill: '#8b8685' })
+    combo.position.x = -combo.width / 2
+    layer.addChild(combo)
+  })
+
+  theme.bind(function() {
+    if (state.judgment) {
+      var delta = timer.time - state.judgment.time
+      var value = state.judgment ? state.judgment.combo : 0
+      layer.visible = delta < 0.75 && value > 0
+      layer.position.y = 160 - Math.exp(delta * -10) * 10
+      if (layer.visible) {
+        setCombo(value)
+      }
+    } else {
+      layer.visible = false
+    }
+  })
+
+})
+
 var notesLayer
 theme.layer("Notes Area", function(layer) {
   notesLayer = layer
@@ -48,6 +80,52 @@ theme.layer("Panel", function(layer) {
   panel.drawRect(240, 0, 12, 512)
   layer.addChild(panel)
 })
+
+theme.layer("Judgment Info", function(layer) {
+
+  layer.position.x = noteX[3] + noteWidth[3] / 2
+  layer.position.y = 300
+
+  var font = '50px Krungthep'
+  var cool = text("เยี่ยม", { font: font, fill: '#fff' })
+  var good = text("ดี", { font: font, fill: '#9cf' })
+  var badd = text("แย่", { font: font, fill: '#c9c' })
+  var miss = text("พลาด", { font: font, fill: '#999' })
+  var display = new Changer(displayObject, null)
+
+  function displayObject(newObject, oldObject) {
+    if (oldObject) oldObject.visible = false
+    if (newObject) newObject.visible = true
+  }
+
+  theme.bind(function() {
+    if (state.judgment) {
+      var delta = timer.time - state.judgment.time
+      layer.visible = delta < 0.75
+      layer.position.y = 300 - Math.exp(delta * -10) * 10
+      display(getThing())
+    } else {
+      display(null)
+    }
+  })
+
+  function getThing() {
+    if (state.judgment.result === 0) return cool
+    if (state.judgment.result === 1) return good
+    if (state.judgment.result === 2) return badd
+    if (state.judgment.result == 'miss') return miss
+  }
+  
+  function text(string, options) {
+    var obj = new pixi.Text(string, options)
+    obj.position.x -= obj.width / 2
+    obj.visible = false
+    layer.addChild(obj)
+    return obj
+  }
+
+})
+
 
 // == return the theme description ==
 theme.info({

@@ -35,6 +35,10 @@ define(function(require) {
     return enums.toArray(enumerable).filter(filterer)
   }
 
+  enums.map = function(enumerable, mapper) {
+    return enums.toArray(enumerable).map(mapper)
+  }
+
   return enums
 
 })
