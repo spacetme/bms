@@ -40,6 +40,7 @@ define(function(require) {
         on: 'game.frame',
         order: 100,
         do: function(event) {
+          this.desire('game.render.bar').render()
           this.desire('game.render.notes').render()
         }
       },

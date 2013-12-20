@@ -53,6 +53,18 @@ define(function(require) {
       }
     }
 
+    ts.range = function(startBeat, endBeat) {
+      return {
+        each: function(callback) {
+          var start = Math.ceil(ts.beatToMeasure(startBeat))
+          var finish = Math.floor(ts.beatToMeasure(endBeat))
+          for (var i = start; i <= finish; i ++) {
+            if (callback(i) === false) return false
+          }
+        }
+      }
+    }
+
     return ts
 
   }

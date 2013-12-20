@@ -8,7 +8,7 @@ define(function(require) {
   /**
    * A data structure representing the playable notes to display.
    */
-  return function GameNotes(data) {
+  return function Entities(data) {
 
     var notes = { }
 
@@ -49,6 +49,7 @@ define(function(require) {
 
     return notes
 
+    // TODO factor out (also in bar.js)
     function beatToPosition(beat) {
       return beat
     }

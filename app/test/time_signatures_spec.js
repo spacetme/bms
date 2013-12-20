@@ -2,6 +2,7 @@
 define(function(require) {
 
   var expect = require('chai').expect
+  var sinon = require('sinon')
   var TimeSignatures = require('time_signatures')
   var delta = 0.0001
 
@@ -35,9 +36,11 @@ describe('TimeSignatures', function() {
     beforeEach(function() {
       ts = new TimeSignatures()
       ts.apply(function() {
-        ts.set(1, 3 / 4)
-        ts.set(2, 7 / 8)
-        ts.set(4, 5 / 4)
+        // 0
+        ts.set(1, 3 / 4) // 3
+        ts.set(2, 7 / 8) // 6.5
+        // 10.5
+        ts.set(4, 5 / 4) // 15.5
       })
     })
 
@@ -64,6 +67,16 @@ describe('TimeSignatures', function() {
       expect(ts.beatToMeasure(7)).to.be.closeTo(2, delta)
       expect(ts.beatToMeasure(8.75)).to.be.closeTo(2.5, delta)
       expect(ts.beatToMeasure(399.5)).to.be.closeTo(100, delta)
+    })
+
+    it('#range should loop time signatures from beat to beat', function() {
+      var spy = sinon.spy()
+      ts.range(-1, 11).each(spy)
+      sinon.assert.callCount(spy, 4)
+      sinon.assert.calledWith(spy, 0)
+      sinon.assert.calledWith(spy, 1)
+      sinon.assert.calledWith(spy, 2)
+      sinon.assert.calledWith(spy, 3)
     })
 
   })

@@ -36,7 +36,6 @@ state.handleJudgment = function(event) {
   } else {
     combo = 0
   }
-  document.title = combo
   state.judgment = { result: event.result, time: timer.time, combo: combo }
 }
 

@@ -12,9 +12,15 @@ var timer = desire('game.timer')
 var theme = new Theme()
 
 // == various aspects of notes: positions, colors, widths ==
-var noteX = [12, 44, 76, 108, 144, 176, 208]
+var noteX = []
 var noteWidth = [32, 32, 32, 36, 32, 32, 32]
 var noteColor = getNoteColors()
+
+var totalWidth = noteWidth.reduce(function(a, b) { return a + b }, 0)
+noteWidth.reduce(function(a, b) {
+  noteX.push(a)
+  return a + b
+}, (800 - totalWidth) / 2)
 
 function getNoteColors() {
   var a = 0xFFCCBB, b = 0xBBCCFF, c = 0xCCFFBB
@@ -66,6 +72,11 @@ theme.layer("Combo Info", function(layer) {
 
 })
 
+var barsLayer
+theme.layer("Time Signature Layer", function(layer) {
+  barsLayer = layer
+})
+
 var notesLayer
 theme.layer("Notes Area", function(layer) {
   notesLayer = layer
@@ -76,8 +87,8 @@ theme.layer("Panel", function(layer) {
   var panel = new pixi.Graphics()
   panel.beginFill(0x8b8685)
   panel.drawRect(0, 512, 800, 600 - 512)
-  panel.drawRect(0, 0, 12, 512)
-  panel.drawRect(240, 0, 12, 512)
+  panel.drawRect(noteX[0] + totalWidth, 0, 12, 512)
+  panel.drawRect(noteX[0] - 12, 0, 12, 512)
   layer.addChild(panel)
 })
 
@@ -90,7 +101,7 @@ theme.layer("Judgment Info", function(layer) {
   var cool = text("เยี่ยม", { font: font, fill: '#fff' })
   var good = text("ดี", { font: font, fill: '#9cf' })
   var badd = text("แย่", { font: font, fill: '#c9c' })
-  var miss = text("พลาด", { font: font, fill: '#999' })
+  var miss = text("กาก", { font: font, fill: '#aaa' })
   var display = new Changer(displayObject, null)
 
   function displayObject(newObject, oldObject) {
@@ -147,6 +158,19 @@ theme.info({
         graphics.beginFill(0xFFFFFF)
         graphics.drawRect(0, -height - theme.note.height, noteWidth[number], theme.note.height / 4)
       }
+      return graphics
+    }
+  },
+  bars: {
+    container: barsLayer
+  },
+  bar: {
+    create: function() {
+      var graphics = new pixi.Graphics()
+      graphics.beginFill(0x9b9695)
+      graphics.drawRect(noteX[0], -1, totalWidth, 1)
+      graphics.beginFill(0x8b8685)
+      graphics.drawRect(noteX[0], -2, totalWidth, 1)
       return graphics
     }
   }
