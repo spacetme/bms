@@ -49,7 +49,7 @@ function render() {
   pool.begin()
   getVisibleBarLines().each(function(measure) {
     var beat = timeSignatures.measureToBeat(measure)
-    var position = beatToPosition(beat)
+    var position = metrics.beatToPosition(beat)
     var y = metrics.noteY(position, null)
     pool.use({ id: measure, y: y })
   })
@@ -60,11 +60,6 @@ function getVisibleBarLines() {
   return metrics.visibleRange(function(start, end) {
     return timeSignatures.range(start, end)
   })
-}
-
-// TODO factor out (also in entities)
-function beatToPosition(beat) {
-  return beat
 }
 
 return { render: render }

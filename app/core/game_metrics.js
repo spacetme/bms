@@ -7,6 +7,7 @@ define(function(require) {
 
 var state = desire('game.state')
 var theme = desire('game.theme')
+var gimmick = desire('game.gimmick')
 
 var metrics = { }
 
@@ -22,6 +23,10 @@ metrics.noteY = function(position, entity) {
   return theme.notes.bottom - unitHeight() * delta
 }
 
+metrics.beatToPosition = function(beat) {
+  return gimmick.beatToPosition(beat)
+}
+
 return metrics
 
 function notesAreaHeight() {
@@ -33,7 +38,7 @@ function unitHeight() {
 }
 
 function currentSpeed() {
-  return 1
+  return gimmick.getZoom(state.beat)
 }
 
   }

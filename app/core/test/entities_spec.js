@@ -3,10 +3,17 @@ define(function(require) {
 
   var expect = require('chai').expect
   var sinon = require('sinon')
+  var Desire = require('desire')
   var NoteData = require('note_data')
   var Entities = require('../entities')
 
   return function() {
+
+var metrics = {
+      beatToPosition: function(beat) {
+        return beat
+      }
+    }
 
 describe('Entities', function() {
 
@@ -25,7 +32,10 @@ describe('Entities', function() {
       { beat: 2, value: 'EE', column: 1 },
       { beat: 2.5, value: 'FF', column: 1 }
     ])
-    var notes = new Entities(data)
+    var notes = new Entities(new Desire({
+          'game.notes': Desire.value(data),
+          'game.metrics': Desire.value(metrics)
+        }))
     notes.range(1, 2).each(spy)
     sinon.assert.callCount(spy, 2)
     assertNoteValue(spy, 'CC')
@@ -42,7 +52,10 @@ describe('Entities', function() {
       { beat: 2, value: 'EE', column: 1 },
       { beat: 2.5, value: 'FF', column: 1 }
     ])
-    var notes = new Entities(data)
+    var notes = new Entities(new Desire({
+          'game.notes': Desire.value(data),
+          'game.metrics': Desire.value(metrics)
+        }))
     notes.range(1, 2).each(spy)
     sinon.assert.callCount(spy, 3)
     assertNoteValue(spy, 'BB')

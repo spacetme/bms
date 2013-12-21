@@ -8,8 +8,10 @@ define(function(require) {
   /**
    * A data structure representing the playable notes to display.
    */
-  return function Entities(data) {
+  return function Entities(desire) {
 
+    var data = desire('game.notes')
+    var metrics = desire('game.metrics')
     var notes = { }
 
     var entities = [ ]
@@ -19,13 +21,13 @@ define(function(require) {
 
       if (note.column < 0) return
       
-      var position = beatToPosition(note.beat)
+      var position = metrics.beatToPosition(note.beat)
       var entity = { position: position, note: note }
 
       entities.push(entity)
 
       if (note.finish != null) {
-        entity.finish = beatToPosition(note.finish)
+        entity.finish = metrics.beatToPosition(note.finish)
         longEntities.push(entity)
       }
       
@@ -48,11 +50,6 @@ define(function(require) {
     }
 
     return notes
-
-    // TODO factor out (also in bar.js)
-    function beatToPosition(beat) {
-      return beat
-    }
 
     function rangeShort(start, finish, use) {
       var first = bsearch(entities,

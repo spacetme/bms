@@ -6,6 +6,8 @@ define(function(require) {
   var NoteData = require('note_data')
   var TimeSignatures = require('time_signatures')
   var BMS = require('bms')
+  var Bukkit = require('bukkit')
+  var Gimmick = require('gimmick')
 
   function eachEvent(bms, callback) {
     return _.each(bms.events, callback)
@@ -18,6 +20,7 @@ define(function(require) {
     var notechart = { }
     notechart.timeSignatures = loadTimesignatures()
     notechart.timing         = loadTiming()
+    notechart.gimmick        = options.gimmick || new Gimmick()
     notechart.notes          = loadNotes()
 
     return notechart
@@ -64,7 +67,6 @@ define(function(require) {
           stats[channel] = (stats[channel] || 0) + 1
         }
       })
-      console.log(stats)
       return (
         make([16, 11, 12, 14, 15, 18], [16, 11, 12, 14, 15, 18], [13, 19]) ||
         make([11, 12, 13, 15, 18, 19], [11, 12, 13, 15, 18, 19], [16, 14]) ||
@@ -96,7 +98,9 @@ define(function(require) {
         return beat(a) - beat(b)
       })
 
-      eachEvent(bms, function(event) {
+      var noteEvents = extractGimmick(bms.events)
+      
+      noteEvents.forEach(function(event) {
         if (BMS.isNote(event)) {
           var eventBeat = beat(event)
           if (50 <= event.channel && event.channel < 70) { // long note
@@ -129,6 +133,29 @@ define(function(require) {
 
       return new NoteData(notes)
 
+    }
+
+    function extractGimmick(events) {
+      var bukkits = {
+        zoom: Bukkit(),
+        scroll: Bukkit()
+      }
+      return notechart.gimmick.apply(function() {
+        return events.filter(function(event) {
+          var keysound = bms.keysounds[event.value]
+          if (!keysound) return true
+          var match = keysound.match(/^(\w+)(\W?=[\d\/\.]+)$/)
+          if (!match) return true
+          var eventBeat = beat(event)
+          var name = match[1]
+          var command = match[2]
+          if (bukkits[name]) {
+            notechart.gimmick[name](eventBeat, bukkits[name](command))
+            return false
+          }
+          return true
+        })
+      })
     }
 
     function beat(event) {

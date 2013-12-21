@@ -17,7 +17,7 @@ define(function(require) {
     'game.keyboard': require('./game_keyboard'),
     'game.keysound': require('./keysound_manager'),
     'game.load.keysound': require('./keysound_loader'),
-    'game.entities': require('./game_entities'),
+    'game.entities': require('./entities'),
     'game.judges': require('./judges'),
     'game.Judge': require('./judge'),
     'game.judgment': require('./judgment'),

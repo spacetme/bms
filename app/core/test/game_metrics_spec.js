@@ -6,6 +6,7 @@ define(function(require) {
 
   var expect = require('chai').expect
   var delta = 0.0001
+  var Gimmick = require('gimmick')
   
   return function() {
 
@@ -25,7 +26,8 @@ describe('GameMetrics', function() {
       'game.state': Desire.value({
         position: 1,
         speed: 2
-      })
+      }),
+      'game.gimmick': Desire.value(new Gimmick())
     }))
   })
 

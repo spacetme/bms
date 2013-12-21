@@ -8,6 +8,7 @@ var notechart = desire('game.notechart')
 var hook = desire('game.hook')
 var score = desire('game.score')
 var state = { }
+var gimmick = desire('game.gimmick')
 
 state.speed = 3
 
@@ -28,7 +29,7 @@ state.release = function(column) {
 state.update = function() {
   state.time = timer.time - 3
   state.beat = notechart.timing.secondToBeat(state.time)
-  state.position = state.beat
+  state.position = gimmick.beatToPosition(state.beat)
 }
 
 state.score = desire('game.score')

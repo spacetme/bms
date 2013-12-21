@@ -14,6 +14,9 @@ define(function(require) {
     require('./note_data_spec')()
     require('./object_id_spec')()
     require('./object_pool_spec')()
+    require('./integrator_spec')()
+    require('./interpolator_spec')()
+    require('./bukkit_spec')()
     require('../core/test/index')()
   }
   

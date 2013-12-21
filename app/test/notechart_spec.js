@@ -120,6 +120,44 @@ describe('notechart', function() {
 
   })
 
+  it('should add gimmicks', function() {
+
+    var timing = new TimingData()
+    var ts = new TimeSignatures()
+    var zoom = sinon.spy()
+    var scroll = sinon.spy()
+    var gimmick = {
+          zoom: zoom,
+          scroll: scroll,
+          apply: function(x) {
+            return x()
+          }
+        }
+
+    var notechart = new Notechart(bms(
+      '#WAV01 zoom=1',
+      '#WAV02 zoom=2',
+      '#WAV03 zoom*=3',
+      '#WAV04 zoom/=4',
+      '#WAV11 scroll=1',
+      '#WAV22 scroll+=3',
+      '#WAV33 scroll*=2',
+      '#WAV44 scroll/=4',
+      '#00101:01020304',
+      '#00101:11223344'
+    ), { gimmick: gimmick })
+
+    sinon.assert.calledWith(zoom, 4, 1)
+    sinon.assert.calledWith(zoom, 5, 2)
+    sinon.assert.calledWith(zoom, 6, 6)
+    sinon.assert.calledWith(zoom, 7, 1.5)
+    sinon.assert.calledWith(scroll, 4, 1)
+    sinon.assert.calledWith(scroll, 5, 4)
+    sinon.assert.calledWith(scroll, 6, 8)
+    sinon.assert.calledWith(scroll, 7, 2)
+
+  })
+
 })
 
   }

@@ -16,6 +16,9 @@ define(function(require) {
   return {
     'game.notes.autoplay': createComponentFactory(true),
     'game.notes.playable': createComponentFactory(false),
+    'game.gimmick': function(desire) {
+      return desire('game.notechart').gimmick
+    },
     'game.notes': function(desire) {
       return desire('game.notechart').notes
     }
