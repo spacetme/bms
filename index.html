@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bms.main">
+<head>
+  <meta charset="UTF-8">
+  <title>BEAT&#x2606;MUSIC&#x2606;SEQUENCE</title>
+  <link rel="stylesheet" href="style.css" media="all">
+  <link rel="stylesheet" href="font/ComputerModernSerif/cmun-serif.css" media="all">
+  <link rel="stylesheet" href="font/ComputerModernTypewriter/cmun-typewriter.css" media="all">
+  <meta name="viewport" content="width=800; user-scalable=0">
+</head>
+<body>
+  <div class="main-view" ng-controller="BMSMainController">
+    <h1>B<small>EAT</small>&#x2606;M<small>USIC</small>&#x2606;S<small>EQUENCE</small></h1>
+    <p class="about-p">
+      BEAT&#x2606;MUSIC&#x2606;SEQUENCE is the first open-source web-based rhythm game<br>
+      built using HTML5 technologies. <a href="#">about &rightarrow;</a>
+    </p>
+    <div class="tabs">
+      <a href="#/" ng-class="{ active: route.name == 'play' }">Play</a>
+      <a href="#/about" ng-class="{ active: route.name == 'about' }">About</a>
+    </div>
+    <div class="tab-contents">
+      <div class="ipad-tips padding" ng-show="route.name == 'play'">
+        <p>iPad users: For best experience, please do the following:</p>
+        <ul>
+          <li>Turn off “assistive touch” and “multitasking gestures.”
+          <li>Set your screen orientation to “portrait.”
+        </ul>
+      </div>
+      <div ng-view></div>
+    </div>
+    <div class="footer">
+      <strong>BEAT&#x2606;MUSIC&#x2606;SEQUENCE</strong> &copy; 2013-2014 <a href="http://spacet.me/">Spacet.me Labs</a><br>
+      <em>This game is open source.</em> <a href="https://github.com/spacetme/bms">Fork me on GitHub</a>
+    </div>
+  </div>
+
+  <script type="text/ng-template" id="angular/partials/main.html">
+    <div id="select-collection">
+      <h2 class="padding">Select Collection</h2>
+      <div ng-show="loading" class="loading">
+        Loading collection list...
+      </div>
+      <div ng-show="error" class="error">
+        <strong>Error!</strong> Unable to load collection list.
+        <pre>{{error | json}}</pre>
+      </div>
+      <div class="padding">
+        <ul>
+          <li ng-repeat="collection in collections">
+            <a href="javascript://" ng-click="useCollection(collection.url)" ng-bind="collection.name"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="angular/partials/select-music.html">
+    <div id="select-music">
+      <h2 class="padding">Select Music</h2>
+      <div ng-show="loading" class="loading">
+        Loading collection list...
+      </div>
+      <div ng-show="error" class="error">
+        <strong>Error!</strong> Unable to load collection list.
+        <pre>{{error | json}}</pre>
+      </div>
+      <table class="game-table">
+        <thead>
+          <tr>
+            <th>Title / Genre</th>
+            <th>Artist</th>
+            <th>Play</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="music in collection.music">
+            <td><span ng-bind="music.title"></span> <em ng-bind="music.genre" class="genre"></em></td>
+            <td ng-bind="music.artist"></td>
+            <td class="levels">
+              <a ng-repeat="(key, value) in music.level" href="game.html"
+                ><span class="keys" ng-bind="keys(key)"></span
+                ><span class="difficulty" ng-bind="difficulty(key)"></span
+                ><span class="level" ng-bind="level(key)"></span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="angular/partials/about.html">
+    <div id="about" class="padding">
+      <p>BEAT&#x2606;MUSIC&#x2606;SEQUENCE is the first open-source web-based rhythm game
+      built using HTML5 technologies—an evidence that HTML5 is ready for music games.</p>
+      <p>This game is tested on:</p>
+      <ul>
+        <li>Google Chrome on Mac OS X</li>
+        <li>MobileSafari on iPad with iOS 7</li>
+      </ul>
+    </div>
+  </script>
+
+  <script src="angular/vendor/js-yaml.min.js"></script>
+  <script src="angular/vendor/angular.min.js"></script>
+  <script src="angular/vendor/angular-route.min.js"></script>
+  <script src="angular/main.js"></script>
+</body>
+</html>

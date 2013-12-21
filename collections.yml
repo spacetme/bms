@@ -1,0 +1,6 @@
+# This file holds the list of all collections available for playing.
+---
+- name: "Default Collection"
+  url: "music/default"
+
+

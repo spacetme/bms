@@ -21,6 +21,7 @@ define(function(require) {
     'game.judges': require('./judges'),
     'game.Judge': require('./judge'),
     'game.judgment': require('./judgment'),
+    'game.score': require('./game_score'),
     'game.judgment.timing_window': Desire.value([0.07, 0.12, 0.15])
   }
 

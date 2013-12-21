@@ -5,7 +5,7 @@ define(function(require) {
 
   function createComponentFactory(autoplay) {
     function filter(note) {
-      return (note.channel < 0) == autoplay
+      return (note.column < 0) == autoplay
     }
     return function(desire) {
       var notes = desire('game.notes')

@@ -1,6 +1,8 @@
 
 body {
   background: #353433;
+  margin: 0;
+  padding: 0;
 }
 
 .stage {
@@ -8,6 +10,154 @@ body {
   width: 800px;
   height: 600px;
   background: #000;
-  margin: 20px auto;
+  margin: 0px auto;
   overflow: hidden;
 }
+
+
+.touch-button {
+  position: absolute;
+  background: #252423;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 2px solid #8b8685;
+  top: 600px;
+  bottom: 16.67%;
+  z-index: 2;
+}
+.touch-button-3 {
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: auto !important;
+  z-index: 1;
+}
+.touch-button > div {
+  background: #454443;
+  position: absolute;
+  -webkit-transform: translate3d(0,0,0);
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+canvas {
+  display: block;
+}
+
+
+.main-view {
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px 0 0;
+  color: #e9e8e7;
+  background: #252423;
+  font-family: "Computer Modern Serif";
+  font-size: 18px;
+}
+.main-view h1 {
+  color: #8b8685;
+  text-align: center;
+}
+.about-p {
+  text-align: center;
+}
+.main-view a {
+  color: #8b8685;
+}
+
+.tabs {
+  overflow: hidden;
+  box-shadow: inset 0 -1px 0 #454443;
+}
+.tabs a {
+  float: left;
+  display: block;
+  padding: 0 10px;
+  margin: 0 0 0 4px;
+  line-height: 30px;
+  height: 30px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  position: relative;
+  top: 1px;
+}
+.tabs a.active {
+  background: #090807;
+  border: 1px solid #454443;
+  border-bottom: 0;
+}
+.tab-contents {
+  background: #090807;
+  padding: 1px 0;
+}
+.padding {
+  padding: 0 10px;
+}
+
+.ipad-tips {
+  margin: 16px 24px;
+  border: 1px solid #454443;
+}
+
+
+.game-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.game-table td {
+  border: 1px solid #353433;
+  border-width: 1px 0;
+  padding: 2px 10px;
+}
+
+
+.footer {
+  font-size: 13px;
+  text-align: center;
+  padding: 10px;
+  color: #8b8685;
+}
+
+pre {
+  white-space: pre-wrap;
+  font: 14px Computer Modern Typewriter, sans-serif;
+}
+.error {
+  background: #452423;
+  border: 1px solid #654443;
+  border-width: 1px 0;
+  padding: 10px;
+}
+.error strong {
+  color: #fca;
+}
+
+
+.genre {
+  color: #8b8685;
+  font-size: 80%;
+}
+.loading {
+  background: #252443;
+  border: 1px solid #454463;
+  border-width: 1px 0;
+  padding: 10px;
+  text-align: center;
+}
+.levels a {
+  background: #151413;
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #353433;
+  font: 15px Computer Modern Typewriter, sans-serif;
+  vertical-align: middle;
+}
+.levels a span {
+  padding: 0 3px;
+}
+.levels a span.difficulty {
+  border: 1px solid #353433;
+  border-width: 0 1px;
+}
+
+
+

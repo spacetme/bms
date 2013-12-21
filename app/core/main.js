@@ -49,6 +49,7 @@ function startGame(base, filename) {
   }
 
   function loadKeysounds(stage) {
+    return true
 
     return when.promise(function(resolve, reject) {
 
@@ -63,7 +64,7 @@ function startGame(base, filename) {
       _.forOwn(bms.keysounds, function(value, key) {
         queue.loadFile({
           id: key,
-          src: base + '/' + value.replace('.wav', '.mp3')
+          src: base + '/' + value.replace('.wav', '.ogg')
         })
       })
 
