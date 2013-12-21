@@ -49,7 +49,6 @@ function startGame(base, filename) {
   }
 
   function loadKeysounds(stage) {
-    return true
 
     return when.promise(function(resolve, reject) {
 
@@ -77,7 +76,7 @@ function startGame(base, filename) {
 function run() {
 
   display.renderTo(document.body)
-  startGame('music/sawasdee-new-year', 'sawasdee-new-year-normal.bms')
+  startGame('music/default/sawasdee-new-year', 'sawasdee-new-year-normal.bms')
 
 }
 
