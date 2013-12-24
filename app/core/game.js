@@ -29,7 +29,7 @@ define(function(require) {
 
   return function(desire) {
 
-    return function Game(notechart) {
+    return function Game(options) {
 
 var game = { }
 var hook = desire('hook')
@@ -39,7 +39,8 @@ game.desire = new Desire(desire)
 game.desire.register(components)
 game.desire.register({
   'game': Desire.value(game),
-  'game.notechart': Desire.value(notechart),
+  'game.options': Desire.value(options),
+  'game.notechart': Desire.value(options.notechart),
   'game.hook': Desire.value(hook.derive(game))
 })
 

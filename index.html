@@ -79,6 +79,7 @@
             <td ng-bind="music.artist"></td>
             <td class="levels">
               <a ng-repeat="(key, value) in music.level" href="game.html"
+                ng-click="play(music, value)"
                 ><span class="keys" ng-bind="keys(key)"></span
                 ><span class="difficulty" ng-bind="difficulty(key)"></span
                 ><span class="level" ng-bind="level(key)"></span></a>

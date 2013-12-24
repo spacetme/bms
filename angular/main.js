@@ -77,6 +77,11 @@ angular.module('bms.main', ['ngRoute'])
   $scope.keys = function(text) { return parseInfo(text).keys }
   $scope.difficulty = function(text) { return parseInfo(text).difficulty }
   $scope.level = function(text) { return parseInfo(text).level }
+  
+  $scope.play = function(music, bms) {
+    sessionStorage['music.path'] = path.join(url, music.path)
+    sessionStorage['music.bms'] = bms
+  }
 
   function parseInfo(key) {
     var m = ('' + key).match(/^(\d+)(ES|NM|HD|EX)(\d+)$/i)

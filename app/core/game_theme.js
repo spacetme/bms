@@ -9,6 +9,7 @@ define(function(require) {
 var Theme = desire('game.Theme')
 var state = desire('game.state')
 var timer = desire('game.timer')
+var options = desire('game.options')
 var theme = new Theme()
 
 // == various aspects of notes: positions, colors, widths ==
@@ -90,6 +91,121 @@ theme.layer("Panel", function(layer) {
   panel.drawRect(noteX[0] + totalWidth, 0, 12, 512)
   panel.drawRect(noteX[0] - 12, 0, 12, 512)
   layer.addChild(panel)
+})
+
+if (options.tutorial) theme.layer("Tutorial", function(layer) {
+
+  layer.position.x = noteX[3] + noteWidth[3] / 2
+  layer.position.y = 150
+
+  tutorial(0, 3, function(text) {
+    text("Before we start the tutorial")
+    text("Let's see if you can figure")
+    text("it out by yourself!")
+  })
+
+  tutorial(19, 23, function(text) {
+    text("BEAT☆MUSIC☆SEQUENCE")
+    text("is an online rhythm game.")
+    text("")
+    text("You use your keyboard")
+    text("to play this game.")
+  })
+
+  tutorial(23, 27, function(text) {
+    text("As you've seen,")
+    text("notes will fall down")
+    text("from the top of the screen.")
+    text("You have to hit")
+    text("the corresponding key")
+    text("when it reaches the bottom.")
+  })
+
+  tutorial(27, 33, function(text) {
+    text("The next set of notes is coming.")
+    text("When it comes, here are the keys")
+    text("that you need to hit:")
+    text("S, S, D, D, F, F,")
+    text("Space, Space,")
+    text("J, J, K, K, L, L, Space")
+  })
+
+  tutorial(33, 35, function(text) {
+    text("They're Coming!!")
+    text("...")
+    text("...")
+    text("GET READY!")
+  })
+
+  tutorial(43, 47, function(text) {
+    text("Sometimes, more than one note")
+    text("may fall down at the same time.")
+    text("")
+    text("That means you must hit")
+    text("multiple keys at the same time.")
+  })
+
+  tutorial(47, 51, function(text) {
+    text("They're coming again!!")
+    text("Here are the keys to hit:")
+    text("")
+    text("FJ FJ FJ FJ DJ DJ FK FK")
+  })
+
+  tutorial(55, 59, function(text) {
+    text("There are also long notes.")
+    text("You need to press and hold")
+    text("the key until the note is")
+    text("finished...")
+  })
+
+  tutorial(67, 75, function(text) {
+    text("That's all!")
+    text("")
+    text("Now you know")
+    text("everythingyou need to know")
+    text("to play this game!")
+    text("")
+    text("HAVE FUN!!")
+  })
+
+  function tutorial(start, end, callback) {
+
+    var y = 0
+    var index = 0
+
+    callback(text)
+
+    function text(string, options) {
+      var begin = start + index * 0.25 + 0.01
+      var obj = new pixi.Text(string, { font: '15px Arial', fill: 'white' })
+      obj.position.x -= Math.round(obj.width / 2)
+      obj.position.y = y
+      y += 28
+      index += 1
+      obj.visible = false
+      layer.addChild(obj)
+      theme.bind(function() {
+        var now = state.beat / 4
+        if (begin <= now && now < end) {
+          if (now <= begin + 0.25) {
+            obj.alpha = (now - begin) / 0.25
+          } else if (end - 0.25 <= now) {
+            obj.alpha = (end - now) / 0.25
+          } else {
+            obj.alpha = 1
+          }
+          obj.visible = true
+        } else {
+          obj.visible = false
+        }
+      })
+      return obj
+    }
+
+    
+  }
+  
 })
 
 theme.layer("Judgment Info", function(layer) {

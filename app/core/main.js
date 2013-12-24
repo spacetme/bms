@@ -37,7 +37,10 @@ function startGame(base, filename) {
   })
   .tap(function() {
     var notechart = new Notechart(bms)
-    var game = new Game(notechart)
+    var game = new Game({
+      notechart: notechart,
+      tutorial: filename == 'ByMySide-TUTORIAL.bms'
+    })
     game.start()
     display.replaceStage(game.desire('game.stage'))
     gameManager.currentGame = game
@@ -63,7 +66,7 @@ function startGame(base, filename) {
       _.forOwn(bms.keysounds, function(value, key) {
         queue.loadFile({
           id: key,
-          src: base + '/' + value.replace('.wav', '.ogg')
+          src: base + '/' + encodeURIComponent(value.replace(/\.(?:wav|mp3|ogg)$/i, '.mp3'))
         })
       })
 
@@ -76,7 +79,9 @@ function startGame(base, filename) {
 function run() {
 
   display.renderTo(document.body)
-  startGame('music/default/sawasdee-new-year', 'sawasdee-new-year-normal.bms')
+  startGame(
+    sessionStorage['music.path'] || 'music/default/sawasdee-new-year',
+    sessionStorage['music.bms'] || 'sawasdee-new-year-normal.bms')
 
 }
 

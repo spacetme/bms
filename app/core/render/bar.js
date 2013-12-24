@@ -57,8 +57,16 @@ function render() {
 }
 
 function getVisibleBarLines() {
-  return metrics.visibleRange(function(start, end) {
-    return timeSignatures.range(start, end)
+  var begin = Math.ceil(timeSignatures.beatToMeasure(state.beat))
+  return enums.make(function(callback) {
+    return metrics.visibleRange(function(start, end) {
+      for (var i = begin;; i ++) {
+        var beat = timeSignatures.measureToBeat(i)
+        var position = metrics.beatToPosition(beat)
+        if (position > end) return
+        if (callback(i) === false) return false
+      }
+    })
   })
 }
 
