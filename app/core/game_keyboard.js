@@ -14,9 +14,9 @@ var notechart = desire('game.notechart')
 function getKeymap() {
 
   if (notechart.columns == 6) {
-    return keymap('RSTNEI')
+    return keymap('SDFJKL')
   } else if (notechart.columns == 7) {
-    return keymap('RST NEI')
+    return keymap('SDF JKL')
   }
 
   function keymap(str) {
