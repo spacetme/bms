@@ -46,9 +46,16 @@
         <pre>{{error | json}}</pre>
       </div>
       <div class="padding">
+        <h3>Play Online</h3>
         <ul>
           <li ng-repeat="collection in collections">
             <a href="{{collectionURL(collection.url)}}" ng-bind="collection.name"></a>
+          </li>
+        </ul>
+        <h3>Advanced</h3>
+        <ul>
+          <li>
+            <em><a href="{{collectionURL('http://localhost:1358')}}">localhost Collection</a></em>
           </li>
           <li>
             <em><a href="javascript://" ng-click="manual()">Manually enter collection URL</a></em>
