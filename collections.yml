@@ -2,5 +2,6 @@
 ---
 - name: "Default Collection"
   url: "music/default"
-
+- name: "Local Collection"
+  url: "http://localhost:1358"
 

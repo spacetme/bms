@@ -50,6 +50,9 @@
           <li ng-repeat="collection in collections">
             <a href="{{collectionURL(collection.url)}}" ng-bind="collection.name"></a>
           </li>
+          <li>
+            <em><a href="javascript://" ng-click="manual()">Manually enter collection URL</a></em>
+          </li>
         </ul>
       </div>
     </div>

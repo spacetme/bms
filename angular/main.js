@@ -108,7 +108,10 @@ angular.module('bms.main', ['ngRoute', 'ngSanitize'])
   $scope.collectionURL = function(url) {
     return '#/collection/' + hash.encode(url)
   }
-
+  $scope.manual = function() {
+    var url = window.prompt('Enter collection URL', 'http://')
+    if (url != null) location.href = $scope.collectionURL(url)
+  }
 })
 .controller('MusicSelectController', function($scope, collections, $location, $routeParams, hash, path) {
   var url = hash.decode($routeParams.url)
