@@ -59,6 +59,15 @@ define(function(require) {
         }
       },
       {
+        on: 'game.column.down',
+        order: 10,
+        do: function(event) {
+          if (event.column == 3) {
+            this.desire('game.ready').fire()
+          }
+        }
+      },
+      {
         on: 'game.column.up',
         order: 10,
         do: function(event) {

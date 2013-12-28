@@ -143,21 +143,54 @@ pre {
   padding: 10px;
   text-align: center;
 }
-.levels a {
+td.levels {
+  text-align: center;
+}
+span.level {
   background: #151413;
   display: inline-block;
   text-decoration: none;
   border: 1px solid #353433;
   font: 15px Computer Modern Typewriter, sans-serif;
   vertical-align: middle;
+  margin-right: 3px;
+  padding: 0 2px;
 }
-.levels a span {
-  padding: 0 3px;
-}
-.levels a span.difficulty {
-  border: 1px solid #353433;
-  border-width: 0 1px;
+.music-row {
+  cursor: pointer;
 }
 
+a.song-title {
+  color: #e9e8e7;
+  text-decoration: none;
+}
+blockquote {
+  margin: 1em 0;
+  padding: 1em;
+  background: #252423;
+  border: 1px dashed #454443;
+}
+.music-description {
+  border-top: 1px solid #454443;
+  padding-top: 5px;
+  text-align: center;
+  color: #8b8685;
+  background: rgb(53,52,51); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(53,52,51,1) 0%, rgba(9,8,7,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(53,52,51,1)), color-stop(100%,rgba(9,8,7,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(53,52,51,1) 0%,rgba(9,8,7,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(53,52,51,1) 0%,rgba(9,8,7,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(53,52,51,1) 0%,rgba(9,8,7,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(53,52,51,1) 0%,rgba(9,8,7,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353433', endColorstr='#090807',GradientType=0 ); /* IE6-9 */
+}
+
+h2 .genre {
+  background: #454443;
+  padding: 2px 4px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: #e9e8e7;
+}
 
 

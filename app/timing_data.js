@@ -26,6 +26,8 @@ define(function(require) {
       var segment = last(function(item) { return beat >= item.beat })
       if (segment) {
         return segment.startTime + (beat - segment.beat) * 60 / segment.bpm
+      } else if (segments.length >= 1) {
+        return beat * 60 / segments[0].bpm
       } else {
         return 0
       }
@@ -35,6 +37,8 @@ define(function(require) {
       var segment = last(function(item) { return second >= item.startTime })
       if (segment) {
         return segment.beat + (second - segment.startTime) * segment.bpm / 60
+      } else if (segments.length >= 1) {
+        return second * segments[0].bpm / 60
       } else {
         return 0
       }

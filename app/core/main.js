@@ -57,6 +57,9 @@ function startGame(base, filename) {
 
       var queue = new createjs.LoadQueue()
       queue.installPlugin(createjs.Sound)
+
+      createjs.Sound.alternateExtensions = ["ogg"]
+
       queue.addEventListener("complete", resolve)
       queue.addEventListener("progress", function(event) {
         stage.setProgress(event.progress)

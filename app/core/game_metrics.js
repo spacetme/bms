@@ -6,6 +6,7 @@ define(function(require) {
   return function(desire) {
 
 var state = desire('game.state')
+var speed = desire('game.speed')
 var theme = desire('game.theme')
 var gimmick = desire('game.gimmick')
 
@@ -34,7 +35,7 @@ function notesAreaHeight() {
 }
 
 function unitHeight() {
-  return state.speed * theme.notes.barHeight / 4 * currentSpeed()
+  return speed.current * theme.notes.barHeight / 4 * currentSpeed()
 }
 
 function currentSpeed() {

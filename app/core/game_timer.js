@@ -22,6 +22,10 @@ gameTimer.bindTimer = function() {
   }, 1000 / 60)
 }
 
+gameTimer.bind = function() {
+  gameTimer.bindTimer()
+}
+
 return gameTimer
 
 function setTime(time) {

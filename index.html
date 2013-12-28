@@ -48,7 +48,7 @@
       <div class="padding">
         <ul>
           <li ng-repeat="collection in collections">
-            <a href="javascript://" ng-click="useCollection(collection.url)" ng-bind="collection.name"></a>
+            <a href="{{collectionURL(collection.url)}}" ng-bind="collection.name"></a>
           </li>
         </ul>
       </div>
@@ -70,23 +70,58 @@
           <tr>
             <th>Title / Genre</th>
             <th>Artist</th>
-            <th>Play</th>
+            <th>Difficulty</th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="music in collection.music">
-            <td><span ng-bind="music.title"></span> <em ng-bind="music.genre" class="genre"></em></td>
+            <td class="music-row" onclick="location.href=this.getElementsByTagName('a')[0]"><a ng-bind="music.title" class="song-title"
+              href="{{musicURL(music)}}"></a> <em ng-bind="music.genre" class="genre"></em></td>
             <td ng-bind="music.artist"></td>
             <td class="levels">
-              <a ng-repeat="(key, value) in music.level" href="game.html"
-                ng-click="play(music, value)"
-                ><span class="keys" ng-bind="keys(key)"></span
-                ><span class="difficulty" ng-bind="difficulty(key)"></span
-                ><span class="level" ng-bind="level(key)"></span></a>
+              <span class="level" ng-bind="pattern.level" ng-repeat="pattern in music.levels"></span>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="angular/partials/music.html">
+    <div id="music">
+      <h2 class="padding">{{music.title}} <small>&mdash; {{music.artist}}</small> <span class="genre">{{music.genre}}</span></h2>
+      <div ng-show="loading" class="loading">
+        Loading collection information...
+      </div>
+      <div ng-show="error" class="error">
+        <strong>Error!</strong> Unable to load collection information.
+        <pre>{{error | json}}</pre>
+      </div>
+      <div ng-show="!loading && !music" class="error">
+        <strong>Error!</strong> Music not found.
+      </div>
+      <div ng-if="music">
+        <table class="game-table">
+          <thead>
+            <tr>
+              <th>Level File</th>
+              <th>Difficulty</th>
+              <th>Level</th>
+              <th>Play</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pattern in music.levels">
+              <td ng-bind="pattern.bms"></td>
+              <td ng-bind="pattern.difficulty"></td>
+              <td ng-bind="pattern.level"></td>
+              <td align="center"><a href="game.html" ng-click="play(pattern)">Play Now</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 class="music-description padding">Description</h3>
+        <div class="description padding" ng-bind-html="marked(music.description)"></div>
+      </div>
     </div>
   </script>
 
@@ -105,6 +140,8 @@
   <script src="angular/vendor/js-yaml.min.js"></script>
   <script src="angular/vendor/angular.min.js"></script>
   <script src="angular/vendor/angular-route.min.js"></script>
+  <script src="angular/vendor/angular-sanitize.min.js"></script>
+  <script src="angular/vendor/marked.js"></script>
   <script src="angular/main.js"></script>
 </body>
 </html>

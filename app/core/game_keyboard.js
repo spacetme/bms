@@ -8,6 +8,7 @@ define(function(require) {
 
 var stage = desire('game.stage')
 var state = desire('game.state')
+var speed = desire('game.speed')
 var hook = desire('game.hook')
 var notechart = desire('game.notechart')
 
@@ -48,6 +49,8 @@ function bind() {
 
   stage.onkeydown = function(e) {
     e.preventDefault()
+    if (e.keyCode == 38) return speed.increase()
+    if (e.keyCode == 40) return speed.decrease()
     var column = codes.indexOf(e.keyCode)
     if (column == -1) return
     state.press(column)

@@ -8,6 +8,7 @@ define(function(require) {
     'game.stage': require('./game_stage'),
     'game.timer': require('./game_timer'),
     'game.state': require('./game_state'),
+    'game.speed': require('./game_speed'),
     'game.metrics': require('./game_metrics'),
     'game.renderer': require('./game_renderer'),
     'game.render.bar': require('./render/bar'),
@@ -22,6 +23,7 @@ define(function(require) {
     'game.Judge': require('./judge'),
     'game.judgment': require('./judgment'),
     'game.score': require('./game_score'),
+    'game.ready': require('./game_ready'),
     'game.judgment.timing_window': Desire.value([0.07, 0.12, 0.15])
   }
 
@@ -45,9 +47,6 @@ game.desire.register({
 })
 
 game.start = function() {
-
-  var timer = game.desire('game.timer')
-  timer.bindTimer()
 
   game.desire('game.renderer').start(game)
   game.desire('game.load.keysound').load()

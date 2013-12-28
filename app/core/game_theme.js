@@ -9,6 +9,8 @@ define(function(require) {
 var Theme = desire('game.Theme')
 var state = desire('game.state')
 var timer = desire('game.timer')
+var ready = desire('game.ready')
+var ComboNumber = require('./theme/combo')(desire)
 var options = desire('game.options')
 var theme = new Theme()
 
@@ -49,13 +51,7 @@ theme.layer("Combo Info", function(layer) {
   layer.position.x = noteX[3] + noteWidth[3] / 2
   layer.position.y = 160
 
-  var combo
-  var setCombo = new Changer(function(value) {
-    if (combo) layer.removeChild(combo)
-    combo = new pixi.Text("" + value, { font: 'bold 96px Helvetica', fill: '#8b8685' })
-    combo.position.x = -combo.width / 2
-    layer.addChild(combo)
-  })
+  var combo = new ComboNumber(layer)
 
   theme.bind(function() {
     if (state.judgment) {
@@ -64,7 +60,7 @@ theme.layer("Combo Info", function(layer) {
       layer.visible = delta < 0.75 && value > 0
       layer.position.y = 160 - Math.exp(delta * -10) * 10
       if (layer.visible) {
-        setCombo(value)
+        combo.set(value)
       }
     } else {
       layer.visible = false
@@ -91,6 +87,36 @@ theme.layer("Panel", function(layer) {
   panel.drawRect(noteX[0] + totalWidth, 0, 12, 512)
   panel.drawRect(noteX[0] - 12, 0, 12, 512)
   layer.addChild(panel)
+})
+
+// == score ==
+theme.layer("Score", function(layer) {
+  var style = { font: 'bold 24px Helvetica', fill: '#e9e8e7' }
+  var score = new ComboNumber(layer, { style: style, digits: 6 })
+  layer.position.y = 512 + 24
+  layer.position.x = 400
+  theme.bind(function() {
+    var value = state.score.get()
+    score.set(value)
+    layer.visible = ready.status
+  })
+})
+
+theme.layer("Space to Start", function(layer) {
+  var style = { font: 'bold 24px Helvetica', fill: '#e9e8e7' }
+  var style2 = { font: 'bold 24px Helvetica', fill: '#ffff00' }
+  var text = new pixi.Text("Press SPACE to Start", style)
+  var text2 = new pixi.Text("Press SPACE to Start", style2)
+  layer.position.y = 512 + 24
+  layer.position.x = 400
+  layer.addChild(text)
+  layer.addChild(text2)
+  text.position.x -= Math.round(text.width / 2)
+  text2.position.x = text.position.x
+  theme.bind(function() {
+    layer.visible = !ready.status
+    text2.alpha = ready.highlight()
+  })
 })
 
 if (options.tutorial) theme.layer("Tutorial", function(layer) {

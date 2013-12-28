@@ -19,6 +19,11 @@ requirejs.config({
       name: 'when',
       location: '../bower_components/when',
       main: 'when'
+    },
+    {
+      name: 'timesync',
+      location: '../vendor/timesync',
+      main: 'timesync'
     }
   ],
   preloads: [
