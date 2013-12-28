@@ -90,6 +90,7 @@ define(function(require) {
 
       var notes = [ ]
       var heads = { }
+      var last = { }
 
       var columns = getColumns()
       notechart.columns = columns.length
@@ -99,6 +100,7 @@ define(function(require) {
       })
 
       var noteEvents = extractGimmick(bms.events)
+      var lnobj = bms.headers.lnobj && bms.headers.lnobj.toLowerCase()
       
       noteEvents.forEach(function(event) {
         if (BMS.isNote(event)) {
@@ -115,11 +117,15 @@ define(function(require) {
               delete heads[event.channel]
             }
           } else { // other notes
-            notes.push({
-              column: column(event, columns),
-              beat: eventBeat,
-              value: event.value
-            })
+            if (lnobj && event.value.toLowerCase() == lnobj) {
+              last[event.channel].finish = eventBeat
+            } else {
+              notes.push(last[event.channel] = {
+                column: column(event, columns),
+                beat: eventBeat,
+                value: event.value
+              })
+            }
           }
         }
       })

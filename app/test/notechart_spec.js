@@ -89,6 +89,25 @@ describe('notechart', function() {
 
   })
 
+  it('should support lnobj', function() {
+
+    var notechart = new Notechart(bms(
+      '#LNOBJ XX',
+      '#00011:01XX0002XX'
+    ))
+
+    expect(notechart.notes.length).to.equal(2)
+
+    var spy = sinon.spy()
+    notechart.notes.each(spy)
+
+    sinon.assert.calledWith(spy,
+      sinon.match({ column: 0, beat: 0, value: '01', finish: 0.8 }))
+    sinon.assert.calledWith(spy,
+      sinon.match({ column: 0, beat: 2.4, value: '02', finish: 3.2 }))
+
+  })
+
   it('notes should have time', function() {
 
     var notechart = new Notechart(bms(
