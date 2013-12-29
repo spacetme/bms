@@ -36,7 +36,6 @@ requirejs.config({
     chai: '../bower_components/chai/chai',
     sinon: '../vendor/sinon-1.7.3',
     pixi: '../vendor/pixi.dev',
-    eventemitter2: '../bower_components/eventemitter2/lib/eventemitter2',
-    when: '../bower_components/when/when'
+    eventemitter2: '../bower_components/eventemitter2/lib/eventemitter2'
   }
 })

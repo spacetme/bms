@@ -7,6 +7,7 @@ define(function(require) {
     require('./stage_manager_spec')()
     require('./judge_spec')()
     require('./judgment_spec')()
+    require('./zip_preloader_spec')()
   }
 
 })

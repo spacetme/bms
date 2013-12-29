@@ -25,7 +25,9 @@ describe('GameMetrics', function() {
       }),
       'game.state': Desire.value({
         position: 1,
-        speed: 2
+      }),
+      'game.speed': Desire.value({
+        current: 2
       }),
       'game.gimmick': Desire.value(new Gimmick())
     }))
@@ -34,6 +36,7 @@ describe('GameMetrics', function() {
   it('#visibleRange should return the positions for notes area', function() {
 
     var state = desire('game.state')
+    var speed = desire('game.speed')
 
     expect(metrics.visibleRange(function(start, end) {
       expect(start).to.be.closeTo(1, delta)
@@ -48,7 +51,7 @@ describe('GameMetrics', function() {
       expect(end).to.be.closeTo(8, delta)
     })
 
-    state.speed = 1
+    speed.current = 1
 
     metrics.visibleRange(function(start, end) {
       expect(start).to.be.closeTo(2, delta)
