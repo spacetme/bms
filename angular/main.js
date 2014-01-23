@@ -93,10 +93,13 @@ angular.module('bms.main', ['ngRoute', 'ngSanitize'])
   }
 
 })
-.controller('BMSMainController', function($scope) {
+.controller('BMSMainController', function($scope, hash) {
 
   $scope.route = { name: '' }
   $scope.marked = window.marked
+  $scope.collectionURL = function(url) {
+    return '#/collection/' + hash.encode(url)
+  }
 
 })
 .controller('ControllerSelectController', function($scope, yaml, $location, hash) {
@@ -105,9 +108,6 @@ angular.module('bms.main', ['ngRoute', 'ngSanitize'])
   .then(function(collections) {
     $scope.collections = collections
   })
-  $scope.collectionURL = function(url) {
-    return '#/collection/' + hash.encode(url)
-  }
   $scope.manual = function() {
     var url = window.prompt('Enter collection URL', 'http://')
     if (url != null) location.href = $scope.collectionURL(url)
@@ -120,7 +120,9 @@ angular.module('bms.main', ['ngRoute', 'ngSanitize'])
   .then(function(collection) {
     $scope.collection = collection
   })
-
+  $scope.subcollectionURL = function(sub) {
+    return $scope.collectionURL(path.join(url, sub))
+  }
   $scope.musicURL = function(music) {
     return '#/collection/' + hash.encode(url) + '/' + hash.encode(music.id)
   }

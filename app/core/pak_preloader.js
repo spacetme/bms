@@ -2,15 +2,14 @@
 define(function(require) {
 
   var when = require('when')
-  var zip = require('zip')
   var guard = require('when/guard')
 
-  return function zipPreloader() {
+  return function pakPreloader() {
 
     var preloader = { }
 
     /**
-     * Loads a ZIP file and monkey-patches XHR to load from it.
+     * Loads a PAK file and monkey-patches XHR to load from it.
      */
     preloader.load = function(path, prefix, contentType) {
 
@@ -43,7 +42,7 @@ define(function(require) {
         .then(JSON.parse)
         .then(function(metadata) {
           var pak = path.replace(/[^\/]*$/, '/') + metadata.pak
-          return xhr(pak, 'sample pack', 'blob')
+          return xhr(pak, metadata.pak, 'blob')
             .then(function(blob) {
               return metadata.files.map(function(file) {
                 var URL = (window.URL || window.webkitURL)
@@ -60,7 +59,8 @@ define(function(require) {
           var map = { }
           result.forEach(function(entry) {
             if (entry.url) {
-              map[prefix + '/' + encodeURIComponent(entry.filename)] = entry.url
+              var filename = entry.filename.split('/').map(encodeURIComponent).join('/')
+              map[prefix + '/' + filename] = entry.url
             }
           })
           return map

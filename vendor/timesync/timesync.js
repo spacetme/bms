@@ -19,6 +19,10 @@ define(function() {
     offset: function(clocks) {
       clocks = clocks.slice()
       clocks.sort(function(a, b) {
+        return a.offset - b.offset
+      })
+      clocks = clocks.slice(1, clocks.length - 1)
+      clocks.sort(function(a, b) {
         return a.delay - b.delay
       })
       var sum = 0, count = 0

@@ -10,8 +10,18 @@
   "author": "",
   "license": "BSD",
   "devDependencies": {
-    "grunt": "~0.4.2",
     "bower": "~1.2.8",
-    "grunt-bower-requirejs": "~0.8.0"
+    "gulp": "~3.2.4",
+    "when": "~2.7.1",
+    "requirejs": "~2.1.9",
+    "mkdirp": "~0.3.5",
+    "passthru": "~0.3.0",
+    "event-stream": "~3.0.20",
+    "gulp-rename": "~0.2.1",
+    "gulp-uglify": "~0.1.0",
+    "gulp-concat": "~2.1.7",
+    "gulp-ngmin": "~0.1.0",
+    "gulp-rev": "~0.1.0",
+    "gulp-minify-css": "~0.2.0"
   }
 }

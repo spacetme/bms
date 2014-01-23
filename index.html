@@ -75,6 +75,11 @@
         <strong>Error!</strong> Unable to load collection list.
         <pre>{{error | json}}</pre>
       </div>
+      <ul>
+        <li ng-repeat="sub in collection.subcollections">
+          <a href="{{subcollectionURL(sub.path)}}">{{ sub.path }}</a>
+        </li>
+      </ul>
       <table class="game-table">
         <thead>
           <tr>
@@ -147,11 +152,14 @@
     </div>
   </script>
 
+  <!-- build -->
   <script src="angular/vendor/js-yaml.min.js"></script>
   <script src="angular/vendor/angular.min.js"></script>
   <script src="angular/vendor/angular-route.min.js"></script>
   <script src="angular/vendor/angular-sanitize.min.js"></script>
   <script src="angular/vendor/marked.js"></script>
   <script src="angular/main.js"></script>
+  <!-- /build -->
+
 </body>
 </html>

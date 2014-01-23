@@ -9,7 +9,8 @@ define(function(require) {
   var createjs = require('createjs')
   var pixi = require('pixi')
 
-  var preloader = require('./zip_preloader')
+  var zipPreloader = require('./zip_preloader')
+  var pakPreloader = require('./pak_preloader')
 
   return function(desire) {
 
@@ -32,6 +33,38 @@ function startGame(base, filename) {
   var bms
   var map
 
+  function preloadWith(module, filename, type) {
+    var stage = null
+    return module.load(base + '/' + filename, base, type).then(
+      null,
+      function(e) { console.error('Cannot preload samples', e) },
+      function(event) {
+        if (event.stage) {
+          stage = new LoadingStage(event.stage, filename, base)
+          display.replaceStage(stage)
+          display.render()
+        } else if (stage && 'progress' in event) {
+          stage.setProgress(event.progress)
+          display.render()
+        }
+      })
+  }
+
+  function getPreferredType() {
+    var mp3 = checkType('audio/mpeg;')
+    var ogg = checkType('audio/ogg; codecs="vorbis"')
+    if (mp3) return { extension: 'mp3', mime: 'audio/mpeg' }
+    if (ogg) return { extension: 'ogg', mime: 'audio/ogg' }
+    return null
+  }
+
+  function blobLoadingSupported() {
+    if (!window.URL) return false
+    try { if (new Blob(['test']).size != 4) return false }
+    catch (e) { return false }
+    return true
+  }
+
   when()
   .then(function() {
     display.replaceStage(new LoadingStage('the notechart', filename, base))
@@ -42,35 +75,13 @@ function startGame(base, filename) {
     bms = arg
   })
   .tap(function() {
-    var keysounds = null
-    var type = null
-    var stage = null
-    var mp3 = checkType('audio/mpeg;')
-    var ogg = checkType('audio/ogg; codecs="vorbis"')
-    if (mp3) {
-      keysounds = 'mp3s.zip'
-      type = 'audio/mpeg'
-    } else if (ogg) {
-      keysounds = 'oggs.zip'
-      type = 'audio/ogg'
-    }
-    if (!keysounds) return
-    if (!window.URL) return
-    try { if (new Blob(['test']).size != 4) return } catch (e) { return }
-    return preloader.load(base + '/' + keysounds, base, type)
-      .then(
-        null,
-        function(e) { console.error('Cannot preload samples', e) },
-        function(event) {
-          if (event.stage) {
-            stage = new LoadingStage(event.stage, keysounds, base)
-            display.replaceStage(stage)
-            display.render()
-          } else if (stage && 'progress' in event) {
-            stage.setProgress(event.progress)
-            display.render()
-          }
-        })
+    var prefer = getPreferredType()
+    if (!prefer) return
+    if (!blobLoadingSupported()) return
+    return preloadWith(pakPreloader, prefer.extension + 's.json', prefer.mime)
+      .catch(function(e) {
+        return preloadWith(zipPreloader, prefer.extension + 's.zip', prefer.mime)
+      })
   })
   .tap(function() {
     var headers = bms.headers
@@ -110,9 +121,13 @@ function startGame(base, filename) {
       })
 
       _.forOwn(bms.keysounds, function(value, key) {
+        var filename = value.replace(/\.(?:wav|mp3|ogg)$/i, '.mp3')
+              .replace(/\\/g, '/')
+              .replace(/^\//, '')
+              .split('/').map(encodeURIComponent).join('/')
         queue.loadFile({
           id: key,
-          src: base + '/' + encodeURIComponent(value.replace(/\.(?:wav|mp3|ogg)$/i, '.mp3'))
+          src: base + '/' + filename
         })
       })
 

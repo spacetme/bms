@@ -69,7 +69,8 @@ define(function(require) {
       .then(function createMap(result) {
         var map = { }
         result.forEach(function(entry) {
-          map[prefix + '/' + encodeURIComponent(entry.filename)] = entry.url
+          var filename = entry.filename.split('/').map(encodeURIComponent).join('/')
+          map[prefix + '/' + filename] = entry.url
         })
         return map
       }).then(function monkeypatchXHR(map) {
