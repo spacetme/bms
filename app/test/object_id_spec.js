@@ -12,6 +12,7 @@ describe('$id', function() {
     var a = { }
     expect($id(a)).to.equal($id(a))
     expect($id(1)).to.equal($id(1))
+    expect($id(null)).to.equal($id(null))
     expect($id('abc')).to.equal($id('abc'))
   })
 
@@ -20,6 +21,7 @@ describe('$id', function() {
     var b = { }
     expect($id(b)).not.to.equal($id(a))
     expect($id(1)).not.to.equal($id(2))
+    expect($id(1)).not.to.equal($id(null))
     expect($id('abc')).not.to.equal($id('def'))
   })
   

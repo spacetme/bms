@@ -32,6 +32,7 @@ requirejs.config({
   paths: {
     lodash: '../bower_components/lodash/dist/lodash.compat',
     desire: '../bower_components/desire/desire',
+    shou: '../vendor/shou',
     bms: '../vendor/bms',
     chai: '../bower_components/chai/chai',
     sinon: '../vendor/sinon-1.7.3',

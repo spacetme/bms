@@ -242,7 +242,7 @@ theme.layer("Judgment Info", function(layer) {
   var font = '50px Krungthep'
   var cool = text("เยี่ยม", { font: font, fill: '#fff' })
   var good = text("ดี", { font: font, fill: '#9cf' })
-  var badd = text("แย่", { font: font, fill: '#c9c' })
+  var badd = text("อ่อนหัด", { font: font, fill: '#c9c' })
   var miss = text("กาก", { font: font, fill: '#aaa' })
   var display = new Changer(displayObject, null)
 

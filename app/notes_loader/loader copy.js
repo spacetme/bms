@@ -1,6 +1,7 @@
 
 define(function(require) {
 
+/*
   var LoadingStage = require('./loading_stage')
   var loader = require('loader')
   var when = require('when')
@@ -9,14 +10,16 @@ define(function(require) {
   var createjs = require('createjs')
   var pixi = require('pixi')
 
-  var zipPreloader = require('./zip_preloader')
   var pakPreloader = require('./pak_preloader')
-
+*/
   return function(desire) {
 
 var display = desire('display')
+
+/*
 var gameManager = desire('game_manager')
 var Game = desire('Game')
+*/
 
 /**
  * Checks if the browser support this audio type.
@@ -37,7 +40,7 @@ function startGame(base, filename) {
     var stage = null
     return module.load(base + '/' + filename, base, type).then(
       null,
-      function(e) { console.error('Cannot preload samples', e) },
+      null,
       function(event) {
         if (event.stage) {
           stage = new LoadingStage(event.stage, filename, base)
@@ -80,7 +83,7 @@ function startGame(base, filename) {
     if (!blobLoadingSupported()) return
     return preloadWith(pakPreloader, prefer.extension + 's.json', prefer.mime)
       .catch(function(e) {
-        return preloadWith(zipPreloader, prefer.extension + 's.zip', prefer.mime)
+        console.error('Cannot preload samples', e)
       })
   })
   .tap(function() {
@@ -115,10 +118,6 @@ function startGame(base, filename) {
       createjs.Sound.alternateExtensions = ["ogg"]
 
       queue.addEventListener("complete", resolve)
-      queue.addEventListener("progress", function(event) {
-        stage.setProgress(event.progress)
-        display.render()
-      })
 
       _.forOwn(bms.keysounds, function(value, key) {
         var filename = value.replace(/\.(?:wav|mp3|ogg)$/i, '.mp3')
@@ -131,13 +130,18 @@ function startGame(base, filename) {
         })
       })
 
+      queue.addEventListener("progress", function(event) {
+        stage.setProgress(event.progress)
+        display.render()
+      })
+
     })
 
   }
   
 }
 
-function run() {
+function main() {
 
   display.renderTo(document.body)
   startGame(
@@ -146,7 +150,7 @@ function run() {
 
 }
 
-return { run: run }
+return { main: main }
 
   }
 

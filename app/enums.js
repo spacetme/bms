@@ -13,7 +13,9 @@ define(function(require) {
    */
   Object.defineProperty(Array.prototype, 'each', {
     value: function(callback) {
-      return _.each(this, callback)
+      for (var i = 0; i < this.length; i ++) {
+        if (false === callback(this[i])) return false
+      }
     },
     configurable: true,
     writable: true

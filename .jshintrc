@@ -12,6 +12,7 @@
 , "node": true
 , "strict": false
 , "es5": true
+, "expr": true
 , "maxparams": 4
 , "maxdepth": 4
 , "maxstatements": 15
@@ -25,6 +26,7 @@
     "chai": false,
     "context": false,
     "sinon": false,
-    "expect": true
+    "expect": true,
+    "TEST_MODE": true
   }
 }

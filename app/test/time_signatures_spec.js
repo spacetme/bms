@@ -3,6 +3,7 @@ define(function(require) {
 
   var expect = require('chai').expect
   var sinon = require('sinon')
+  var enumCheck = require('spec_helper/enum').check
   var TimeSignatures = require('time_signatures')
   var delta = 0.0001
 
@@ -69,14 +70,20 @@ describe('TimeSignatures', function() {
       expect(ts.beatToMeasure(399.5)).to.be.closeTo(100, delta)
     })
 
-    it('#range should loop time signatures from beat to beat', function() {
-      var spy = sinon.spy()
-      ts.range(-1, 11).each(spy)
-      sinon.assert.callCount(spy, 4)
-      sinon.assert.calledWith(spy, 0)
-      sinon.assert.calledWith(spy, 1)
-      sinon.assert.calledWith(spy, 2)
-      sinon.assert.calledWith(spy, 3)
+    describe('#range', function() {
+
+      enumCheck(function() { return ts.range(-1, 11) })
+
+      it('#range should loop time signatures from beat to beat', function() {
+        var spy = sinon.spy()
+        ts.range(-1, 11).each(spy)
+        sinon.assert.callCount(spy, 4)
+        sinon.assert.calledWith(spy, 0)
+        sinon.assert.calledWith(spy, 1)
+        sinon.assert.calledWith(spy, 2)
+        sinon.assert.calledWith(spy, 3)
+      })
+
     })
 
   })

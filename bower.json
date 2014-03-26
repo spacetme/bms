@@ -1,5 +1,5 @@
 {
-  "name": "html5jam",
+  "name": "bms",
   "version": "0.0.0",
   "authors": [
     "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>"
@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "lodash": "~2.4.1",
-    "when": "~2.7.0",
+    "when": "~3.0.1",
     "chai": "~1.8.1",
     "eventemitter2": "~0.4.13"
   }

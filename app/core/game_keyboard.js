@@ -15,15 +15,15 @@ var notechart = desire('game.notechart')
 function getKeymap() {
 
   if (notechart.columns == 6) {
-    return keymap('SDFJKL')
+    return keymap('SDFJKLQWEUIO', 6)
   } else if (notechart.columns == 7) {
-    return keymap('SDF JKL')
+    return keymap('SDF JKLQWE UIO', 7)
   }
 
-  function keymap(str) {
-    var keys = []
+  function keymap(str, mod) {
+    var keys = { }
     for (var i = 0; i < str.length; i ++) {
-      keys.push(str.charCodeAt(i))
+      keys[str.charCodeAt(i)] = i % mod
     }
     return keys
   }
@@ -42,8 +42,8 @@ function bind() {
 
   stage.onkeyup = function(e) {
     e.preventDefault()
-    var column = codes.indexOf(e.keyCode)
-    if (column == -1) return
+    var column = codes[e.keyCode]
+    if (column == null) return
     state.release(column)
   }
 
@@ -51,8 +51,8 @@ function bind() {
     e.preventDefault()
     if (e.keyCode == 38) return speed.increase()
     if (e.keyCode == 40) return speed.decrease()
-    var column = codes.indexOf(e.keyCode)
-    if (column == -1) return
+    var column = codes[e.keyCode]
+    if (column == null) return
     state.press(column)
   }
 

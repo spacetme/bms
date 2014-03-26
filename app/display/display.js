@@ -12,7 +12,7 @@ define(function(require) {
     var element = document.createElement('div')
     element.className = 'stage'
 
-    var renderer = pixi.autoDetectRenderer(800, 600)
+    var renderer = new pixi.CanvasRenderer(800, 600)
     element.appendChild(renderer.view)
 
     var display = StageManager.mix({ })

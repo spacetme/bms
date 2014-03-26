@@ -1,19 +1,25 @@
 
-/*global mocha*/
 define(function(require) {
 
-  var App = require('app')
+  var Shou = require('shou')
+  var config = require('config')
 
-  var app = new App()
-  app.plug(require('./core/index'))
-  app.plug(require('./ipad/index'))
+  var load = require('modules_loader')
+  load(config.plugins, 'index').then(function(plugins) {
 
-  if (document.getElementById('test-app')) {
-    require('./test/index')()
-    mocha.run()
-  } else {
-    app.hook('main')
-  }
+    var factory = Shou()
+    plugins.forEach(factory.use)
+
+    var app = factory.create()
+    app.run('main')
+
+  }, null, function(event) {
+
+    console.log('Loaded ' + event.name + ' [' + event.loaded + '/' + event.total + ']')
+    return event
+
+  }).done()
+
 
 })
 

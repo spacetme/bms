@@ -6,15 +6,19 @@ define(function(require) {
   
   return function NoteData(notes) {
 
-    notes = _.sortBy(notes, 'beat')
-    
-    var notedata = { _notes: notes }
+    var notedata = { }
 
-    notedata.length = notes.length
+    notedata.load = function(newNotes) {
+      notes = _.sortBy(newNotes, 'beat')
+      notedata._notes = notes
+      notedata.length = notes.length
+    }
 
     notedata.each = function(callback) {
       return _.each(notes, callback)
     }
+
+    if (notes) notedata.load(notes)
 
     return notedata
 

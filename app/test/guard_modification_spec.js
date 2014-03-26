@@ -55,6 +55,12 @@ describe('guardModification', function() {
         })
       }).to.throw('nested')
     })
+
+    it('should not error when there is no after function', function() {
+      var o = { }
+      guardModification(o, function(guard) { })
+      o.apply(function() { })
+    })
     
   })
   

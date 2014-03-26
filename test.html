@@ -9,10 +9,8 @@
   <body id="test-app">
     <div id="mocha"></div>
     <script src="test/mocha.js"></script>
-    <script src="vendor/zip.js/zip.js"></script>
-    <script>zip.workerScriptsPath = "/vendor/zip.js/"</script>
-    <script>mocha.setup('bdd')</script>
-    <script src="vendor/require.js" data-main="main"></script>
-    <script src="app/requirejs-config.js"></script>
+    <script src="vendor/require.js"></script>
+    <script src="require.conf.js"></script>
+    <script src="test/browser-setup.js"></script>
   </body>
 </html>
