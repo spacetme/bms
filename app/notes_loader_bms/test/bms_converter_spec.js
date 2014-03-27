@@ -217,6 +217,36 @@ describe('bms_converter', function() {
 
   })
 
+  describe('keysound loading', function() {
+
+    beforeEach(function() {
+      convert(bms(
+        '#WAV01 hello.mp3',
+        '#WAV02 \\what\\test.ogg',
+        '#WAV03 cool.wav',
+        '#WAV04 scroll=1',
+        '#00101:010204'
+      ), notechart)
+    })
+
+    it('should add used keysound by path', function() {
+      expect(notechart.keysounds['01'].path).to.equal('hello.mp3')
+    })
+
+    it('should convert path name', function() {
+      expect(notechart.keysounds['02'].path).to.equal('what/test.ogg')
+    })
+
+    it('should not add unused keysound', function() {
+      expect(notechart.keysounds['03']).to.be.undefined
+    })
+
+    it('should not add gimmick keysounds', function() {
+      expect(notechart.keysounds['04']).to.be.undefined
+    })
+    
+  })
+
 })
 
   }

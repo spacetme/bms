@@ -15,6 +15,8 @@ define(function(require) {
     notechart.timing         = new TimingData()
     notechart.gimmick        = new Gimmick()
     notechart.notes          = new NoteData()
+    notechart.keysounds      = { }
+
     notechart.info           = {
       title:  'Untitled',
       artist: 'Unknown Artist',

@@ -13,10 +13,13 @@ define(function(require) {
   
   function convert(bms, notechart) {
 
+    var usedKeysound = { }
+
     loadTimesignatures()
     loadTiming()
     loadNotes()
     loadMetadata()
+    loadKeysounds()
 
     function loadTimesignatures() {
       var ts = notechart.timeSignatures
@@ -142,7 +145,10 @@ define(function(require) {
           var keysound = bms.keysounds[event.value]
           if (!keysound) return true
           var match = keysound.match(/^(\w+)(\W?=[\d\/\.]+[!]?)$/)
-          if (!match) return true
+          if (!match) {
+            usedKeysound[event.value] = true
+            return true
+          }
           var eventBeat = beat(event)
           var name = match[1]
           var command = match[2]
@@ -152,6 +158,18 @@ define(function(require) {
           }
           return true
         })
+      })
+    }
+
+    function loadKeysounds() {
+      _.forOwn(bms.keysounds, function(value, key) {
+        var filename = value
+              .replace(/\\/g, '/')
+              .replace(/^\//, '')
+              .split('/').map(encodeURIComponent).join('/')
+        if (usedKeysound[key]) {
+          notechart.keysounds[key] = { path: filename, type: 'file' }
+        }
       })
     }
 

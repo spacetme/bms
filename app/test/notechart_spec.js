@@ -19,6 +19,9 @@ describe('notechart', function() {
   it('should contain noteData', function() {
     expect(new Notechart().notes.each).to.be.ok
   })
+  it('should contain keysounds', function() {
+    expect(new Notechart().keysounds).to.be.ok
+  })
 
 })
 
