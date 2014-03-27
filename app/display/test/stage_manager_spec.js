@@ -53,6 +53,9 @@ describe('StageManager', function() {
       expect(manager.currentStage).to.equal(c)
       manager.popStage()
       expect(manager.currentStage).to.equal(a)
+      manager.popStage()
+      manager.replaceStage(c)
+      expect(manager.currentStage).to.equal(c)
     })
   })
 

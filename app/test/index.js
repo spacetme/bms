@@ -17,6 +17,7 @@ define(function(require) {
   require('./object_pool_spec')()
   require('./time_signatures_spec')()
   require('./timing_data_spec')()
+  require('./spec_helper_promise_spec')()
 
   var load = require('modules_loader')
   var config = require('config')

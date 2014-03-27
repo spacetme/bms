@@ -11,7 +11,7 @@ define(function(require) {
           done()
         }, function(e) {
           done(e)
-        })
+        }).done()
       }
     },
 
@@ -19,9 +19,9 @@ define(function(require) {
       return function(done) {
         when.try(fn).then(function() {
           done(new Error('A promise should be rejected!'))
-        }, function() {
+        }, function(e) {
           done()
-        })
+        }).done()
       }
     }
 
