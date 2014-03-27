@@ -3,6 +3,7 @@ define(function(require) {
 
   var _ = require('lodash')
   var bsearch = require('bsearch')
+  var enums = require('enums')
   
   return function NoteData(notes) {
 
@@ -15,7 +16,7 @@ define(function(require) {
     }
 
     notedata.each = function(callback) {
-      return _.each(notes, callback)
+      return notes && notes.each && notes.each(callback)
     }
 
     if (notes) notedata.load(notes)

@@ -15,7 +15,9 @@ define(function(require) {
         })
         describe('when always returning false', function() {
           it('should return false', function() {
-            expect(e.each(function() { return false })).to.equal(false)
+            var run = false
+            var result = e.each(function() { run = true; return false })
+            if (run) expect(result).to.equal(false)
           })
           it('should not call the callback anymore', function() {
             var callCount = 0
