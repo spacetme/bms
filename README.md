@@ -1,4 +1,4 @@
-BEAT☆MUSIC☆SEQUENCE [![Build Status](https://travis-ci.org/spacetme/bms.svg?branch=refactor_mercilessly)](https://travis-ci.org/spacetme/bms)
+BEAT☆MUSIC☆SEQUENCE [![Build Status](https://travis-ci.org/spacetme/bms.svg?branch=refactor_mercilessly)](https://travis-ci.org/spacetme/bms) [![Coverage Status](https://coveralls.io/repos/spacetme/bms/badge.png?branch=refactor_mercilessly)](https://coveralls.io/r/spacetme/bms?branch=refactor_mercilessly)
 ===================
 
 A rhythm game that advances with web technology
